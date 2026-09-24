@@ -1,0 +1,401 @@
+/* ================================================================
+   VARIABLES CSS Y PALETA DE COLORES INSTITUCIONAL
+   Esta parte define los colores generales de la web. Al usar variables, 
+   si quieres cambiar un color, solo lo cambias aquí y se actualiza en toda la página.
+   ================================================================ */
+:root {
+  --primary-color: #1e3a8a; /* Azul marino institucional para encabezados y botones principales */
+  --secondary-color: #0284c7; /* Azul de contraste para textos destacados */
+  --accent-color: #10b981; /* Verde para confirmaciones o botones de éxito */
+  --danger-color: #ef4444; /* Rojo para cancelaciones o botones de borrar */
+  --warning-color: #f59e0b; /* Naranja para botones de edición */
+  --info-color: #0ea5e9; /* Celeste para acciones como imprimir */
+  --bg-color: #f8fafc; /* Color de fondo claro de la página */
+  --surface-color: #ffffff; /* Color blanco para las tarjetas (cards) y formularios */
+  --text-color: #0f172a; /* Color del texto principal (casi negro) */
+  --text-muted: #64748b; /* Color para textos secundarios (gris) */
+  --border-color: #cbd5e1; /* Color de los bordes de los inputs y tarjetas */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Efecto de sombra general */
+}
+
+/* ================================================================
+   MODO OSCURO
+   Si el body tiene esta clase, se reemplazan las variables de arriba 
+   por colores oscuros para proteger la vista.
+   ================================================================ */
+body.dark-mode {
+  --bg-color: #0f172a;
+  --surface-color: #1e293b;
+  --text-color: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+}
+
+/* ================================================================
+   ESTILOS BASE GLOBALES
+   Quita los márgenes por defecto del navegador y define la tipografía de toda la web.
+   ================================================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilos del cuerpo de la página */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color 0.3s, color 0.3s; /* Animación suave al cambiar a modo oscuro */
+}
+
+/* Contenedor central para que el contenido no ocupe toda la pantalla en monitores grandes */
+.container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+/* ================================================================
+   ENCABEZADO (HEADER)
+   Da color y forma a la barra superior donde va el logo y el botón de modo oscuro.
+   ================================================================ */
+.main-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px 0;
+}
+
+.header-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* Separa el logo a la izquierda y los botones a la derecha */
+  align-items: center;
+  padding: 0 15px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  height: 45px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================================================================
+   TARJETAS Y CONTENEDORES (CARDS)
+   Estilo de las "cajas blancas" con sombra donde van los formularios.
+   ================================================================ */
+.auth-card,
+.app-card {
+  background-color: var(--surface-color);
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  margin-bottom: 25px;
+}
+
+/* Imagen decorativa del formulario principal */
+.banner-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+/* ================================================================
+   FORMULARIOS Y GRID (CUADRÍCULAS)
+   Diseño de las cajas de texto, etiquetas y cómo se agrupan en columnas.
+   ================================================================ */
+fieldset {
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+legend {
+  font-weight: bold;
+  color: var(--secondary-color);
+  padding: 0 8px;
+}
+
+/* Crea una cuadrícula de 2 columnas para poner inputs uno al lado del otro */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+/* Estilo general para todos los campos donde el usuario escribe o selecciona algo */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* ================================================================
+   CARDS DE SERVICIOS (CHECKBOX)
+   Diseño de los botones seleccionables (cuadritos) de los servicios y cobros.
+   ================================================================ */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Se adaptan automáticamente al espacio */
+  gap: 10px;
+}
+
+.checkbox-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--bg-color);
+  cursor: pointer;
+}
+
+/* Resalta la tarjeta de descuento cuando está activa */
+.checkbox-card.highlight {
+  background-color: rgba(2, 132, 199, 0.1);
+  border-color: var(--secondary-color);
+}
+
+/* ================================================================
+   CAJA DE RESUMEN FINANCIERO
+   Estilos de la zona inferior donde se muestra el subtotal, IVA y Total a Pagar.
+   ================================================================ */
+.summary-box {
+  background-color: var(--bg-color);
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid var(--secondary-color); /* Línea azul a la izquierda para destacar */
+  margin-top: 15px;
+  text-align: right;
+}
+
+.summary-box h3 {
+  color: var(--secondary-color);
+  font-size: 1.3em;
+}
+
+/* ================================================================
+   BOTONES
+   Define cómo se ven todos los botones de la página y sus colores según su función.
+   ================================================================ */
+button {
+  cursor: pointer;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: opacity 0.2s;
+  margin: 2px;
+}
+
+button:hover {
+  opacity: 0.9; /* Efecto que hace el botón un poco transparente al pasar el mouse */
+}
+
+/* Clases específicas que usan las variables de la paleta de colores de arriba */
+.btn-primary { background-color: var(--primary-color); color: white; }
+.btn-secondary { background-color: var(--text-muted); color: white; }
+.btn-success { background-color: var(--accent-color); color: white; }
+.btn-danger { background-color: var(--danger-color); color: white; }
+.btn-warning { background-color: var(--warning-color); color: white; }
+.btn-info { background-color: var(--info-color); color: white; }
+
+/* Botón grande para enviar formularios */
+.btn-large {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1em;
+}
+
+/* ================================================================
+   AUTENTICACIÓN TOGGLE
+   Botones superiores para alternar entre "Iniciar Sesión" y "Registrarme"
+   ================================================================ */
+.auth-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.auth-toggle button {
+  flex: 1;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.auth-toggle button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* ================================================================
+   TABLA DE HISTORIAL
+   Estilos de la tabla donde se guardan las matrículas registradas.
+   ================================================================ */
+.table-responsive {
+  overflow-x: auto; /* Permite scroll horizontal en móviles si la tabla es muy ancha */
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* ================================================================
+   MODAL DE VISTA PREVIA
+   Es la ventana oscura y el cuadro blanco que aparece por encima de la web al guardar.
+   ================================================================ */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Cuadro blanco principal del comprobante */
+.modal-content {
+  background-color: white;
+  color: black;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Diseño interno que parece un ticket (borde punteado) */
+.receipt-box {
+  border: 2px dashed #000;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.receipt-header {
+  text-align: center;
+}
+
+.receipt-totals {
+  margin-top: 15px;
+  text-align: right;
+  border-top: 1px solid #000;
+  padding-top: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* Pie de página de la web */
+.main-footer {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+/* ================================================================
+   CLASES DE UTILIDAD
+   Esta clase se usa en JavaScript para ocultar elementos de la pantalla (display: none).
+   ================================================================ */
+.hidden {
+  display: none !important;
+}
+
+/* ================================================================
+   ADAPTABILIDAD RESPONSIVE (Móviles)
+   Cambia el diseño a una sola columna cuando se ve desde un celular.
+   ================================================================ */
+@media (max-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .header-container { flex-direction: column; gap: 10px; text-align: center; }
+  .summary-box { text-align: center; }
+}
+
+/* ================================================================
+   ESTILOS PARA IMPRESIÓN OFICIAL (@media print)
+   Oculta los botones, encabezado y fondo cuando presionas Control+P (Imprimir)
+   y solo muestra el ticket.
+   ================================================================ */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible;
+  }
+
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none;
+  }
+
+  .modal-actions,
+  .main-header,
+  .main-footer {
+    display: none !important;
+  }
+}

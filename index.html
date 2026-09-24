@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Matrícula Escolar y Comprobantes</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <!-- =======================================================
+         ENCABEZADO PRINCIPAL (HEADER)
+         Aquí va el nombre del instituto, el botón de modo oscuro 
+         y la información de qué usuario inició sesión.
+         ======================================================= -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="brand">
+                <img src="img/logo-colegio.png" alt="Logo Institucional" class="logo" onerror="this.style.display='none'">
+                <h1>Instituto Académico San José</h1>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="btn-secondary" type="button">Modo Oscuro</button>
+                <div id="user-info" class="user-info hidden">
+                    <span id="user-display"></span>
+                    <button id="logout-btn" class="btn-danger" type="button">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- =======================================================
+         CONTENEDOR PRINCIPAL
+         Envuelve todo el contenido central de la página.
+         ======================================================= -->
+    <main class="container">
+
+        <!-- =======================================================
+             SECCIÓN 1: AUTENTICACIÓN (LOGIN Y REGISTRO)
+             Caja que muestra el formulario de Iniciar Sesión o Registrarse.
+             Se oculta cuando el usuario entra exitosamente.
+             ======================================================= -->
+        <section id="auth-section" class="auth-card">
+            
+            <!-- Botones para cambiar entre Login y Registro -->
+            <div class="auth-toggle">
+                <button id="show-login-btn" class="active" type="button">Iniciar Sesión</button>
+                <button id="show-register-btn" type="button">Registrarme</button>
+            </div>
+
+            <!-- FORMULARIO DE INICIO DE SESIÓN -->
+            <form id="login-form" class="auth-form">
+                <h2>Acceso al Sistema de Matrícula</h2>
+                <div class="form-group">
+                    <label for="login-username">Nombre de Usuario:</label>
+                    <input type="text" id="login-username" required placeholder="Ej. usuario123">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña:</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-primary">Ingresar al Sistema</button>
+            </form>
+
+            <!-- FORMULARIO DE REGISTRO (Oculto por defecto) -->
+            <form id="register-form" class="auth-form hidden">
+                <h2>Crear Cuenta de Usuario</h2>
+                <div class="form-group">
+                    <label for="reg-role">Rol en el Sistema:</label>
+                    <select id="reg-role" required>
+                        <option value="secretario">Secretariado </option>
+                        <option value="admin">Administrador</option>
+                        <option value="director">Director</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Correo Electrónico:</label>
+                    <input type="email" id="reg-email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|sv|org|net|edu)" placeholder="usuario@dominio.sv">
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Nombre de Usuario:</label>
+                    <input type="text" id="reg-username" required pattern="[A-Za-z0-9_]{4,15}" placeholder="Usuario (4-15 caracteres)">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Contraseña:</label>
+                    <input type="password" id="reg-password" required minlength="6" placeholder="Mínimo 6 caracteres">
+                </div>
+                <button type="submit" class="btn-success">Guardar Registro</button>
+            </form>
+        </section>
+
+        <!-- =======================================================
+             SECCIÓN 2: APLICACIÓN PRINCIPAL DE MATRÍCULA
+             Esta área solo se muestra si el usuario inició sesión.
+             Contiene el formulario para ingresar alumnos.
+             ======================================================= -->
+        <section id="app-section" class="app-card hidden">
+            
+            <div class="banner-container">
+                <img src="img/banner-estudiantes.jpg" alt="Banner Educativo" class="banner-img" onerror="this.style.display='none'">
+            </div>
+
+            <h2 id="app-title">Gestión de Matrícula y Cobro de Cuotas</h2>
+
+            <!-- FORMULARIO DE MATRÍCULA -->
+            <form id="matricula-form">
+                
+                <!-- FIELDSET 1: DATOS PERSONALES -->
+                <fieldset>
+                    <legend>Información General del Alumno y Encargado</legend>
+                    
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="student-name">Nombre Completo del Alumno:</label>
+                            <input type="text" id="student-name" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" placeholder="Ej. Juan Carlos Pérez">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="student-nie">NIE / Código de Estudiante:</label>
+                            <input type="text" id="student-nie" required pattern="[0-9A-Za-z]{6,10}" placeholder="Ej. 8492019">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="student-phone">Teléfono de Contacto (8 dígitos):</label>
+                            <input type="tel" id="student-phone" required pattern="[1-9]{8}" maxlength="8" placeholder="78901234">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="student-email">Correo del Encargado:</label>
+                            <input type="email" id="student-email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|sv|org|net|edu)" placeholder="encargado@correo.com">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="grade-level">Grado / Nivel Educativo:</label>
+                            <select id="grade-level" required>
+                                <option value="">-- Seleccionar Nivel --</option>
+                                <option value="Parvularia (K4 - K5)">Parvularia (Kinder 4 - Kinder 5)</option>
+                                <option value="Primer Ciclo (1° - 3°)">Primer Ciclo (1° a 3° Grado)</option>
+                                <option value="Segundo Ciclo (4° - 6°)">Segundo Ciclo (4° a 6° Grado)</option>
+                                <option value="Tercer Ciclo (7° - 9°)">Tercer Ciclo (7° a 9° Grado)</option>
+                                <option value="Bachillerato General">Bachillerato General</option>
+                                <option value="Bachillerato Técnico">Bachillerato Técnico en Informática</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guardian-name">Nombre del Encargado Legal:</label>
+                            <input type="text" id="guardian-name" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" placeholder="Ej. María Elena Pérez">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observations">Observaciones o Condición Médica (Opcional):</label>
+                        <textarea id="observations" rows="2" placeholder="Alergias, medicamentos, notas especiales..."></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- FIELDSET 2: SELECCIÓN DE SERVICIOS -->
+                <fieldset>
+                    <legend>Selección de Servicios y Cuotas Escolares</legend>
+                    
+                    <div class="services-grid">
+                        <label class="checkbox-card">
+                            <input type="checkbox" class="service-calc" value="75.00" data-name="Matrícula Anual Inicial" checked disabled>
+                            <span><strong>Matrícula Anual Inicial:</strong> $75.00</span>
+                        </label>
+
+                        <label class="checkbox-card">
+                            <input type="checkbox" class="service-calc" value="50.00" data-name="Primera Cuota de Mensualidad" checked>
+                            <span><strong>Primera Mensualidad:</strong> $50.00</span>
+                        </label>
+
+                        <label class="checkbox-card">
+                            <input type="checkbox" class="service-calc" value="15.00" data-name="Seguro Estudiantil de Accidentes">
+                            <span><strong>Seguro Estudiantil:</strong> $15.00</span>
+                        </label>
+
+                        <label class="checkbox-card">
+                            <input type="checkbox" class="service-calc" value="25.00" data-name="Plataforma Digital y Recursos">
+                            <span><strong>Plataforma y Libros Digitales:</strong> $25.00</span>
+                        </label>
+
+                        <label class="checkbox-card">
+                            <input type="checkbox" class="service-calc" value="30.00" data-name="Servicio de Transporte Escolar">
+                            <span><strong>Transporte Escolar:</strong> $30.00</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <!-- FIELDSET 3: FINANZAS Y CÁLCULOS -->
+                <fieldset>
+                    <legend>Descuentos y Cálculo de Pago</legend>
+                    
+                    <div class="discount-container">
+                        <label class="checkbox-card highlight">
+                            <input type="checkbox" id="discount-check">
+                            <span><strong>Aplica Carnet Estudiantil / Beca (5% de Descuento sobre Subtotal)</strong></span>
+                        </label>
+                    </div>
+
+                    <!-- CAJA DE RESUMEN QUE SE ACTUALIZA SOLA CON JAVASCRIPT -->
+                    <div class="summary-box">
+                        <p>Subtotal Servicios: <span id="summary-subtotal">$0.00</span></p>
+                        <p>Descuento Aplicado (5%): <span id="summary-discount">-$0.00</span></p>
+                        <p>Impuesto IVA Incluido (13%): <span id="summary-tax">$0.00</span></p>
+                        <hr>
+                        <h3>TOTAL A PAGAR: <span id="summary-total">$0.00</span></h3>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="submit" id="main-submit-btn" class="btn-primary btn-large">Generar Vista Previa de Comprobante</button>
+                </div>
+            </form>
+
+            <!-- =======================================================
+                 HISTORIAL DE REGISTROS
+                 Aquí se pinta la tabla con las matrículas ya guardadas.
+                 ======================================================= -->
+            <section class="history-section">
+                <h3>Registros de Inscripción Guardados</h3>
+                <div class="table-responsive">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Estudiante</th>
+                                <th>NIE</th>
+                                <th>Grado</th>
+                                <th>Total</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody">
+                            <!-- JS Inyecta las filas (tr) de la tabla aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+    <!-- =======================================================
+         PIE DE PÁGINA (FOOTER)
+         ======================================================= -->
+    <footer class="main-footer">
+        <p>&copy; 2026 Sistema de Matrícula Escolar e Inscripción. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- =======================================================
+         MODAL DE VISTA PREVIA (TICKET)
+         Este cuadro negro está oculto y solo se muestra al guardar o imprimir.
+         ======================================================= -->
+    <div id="preview-modal" class="modal hidden">
+        <div class="modal-content">
+            <!-- TICKET QUE SE IMPRIMIRÁ -->
+            <div id="printable-receipt" class="receipt-box">
+                <div class="receipt-header">
+                    <h2>COMPROBANTE OFICIAL DE MATRÍCULA</h2>
+                    <p>Instituto Académico San José</p>
+                    <p class="receipt-date">Fecha de Emisión: <span id="rec-date"></span></p>
+                </div>
+                <hr>
+                <div class="receipt-body">
+                    <p><strong>Estudiante:</strong> <span id="rec-student"></span></p>
+                    <p><strong>NIE:</strong> <span id="rec-nie"></span> | <strong>Teléfono:</strong> <span id="rec-phone"></span></p>
+                    <p><strong>Grado:</strong> <span id="rec-grade"></span></p>
+                    <p><strong>Encargado:</strong> <span id="rec-guardian"></span> (<span id="rec-email"></span>)</p>
+                    
+                    <h4>Detalle de Servicios Contratados:</h4>
+                    <ul id="rec-services-list"></ul>
+
+                    <div class="receipt-totals">
+                        <p>Subtotal: <span id="rec-subtotal"></span></p>
+                        <p>Descuento: <span id="rec-discount"></span></p>
+                        <p>IVA Incluido (13%): <span id="rec-tax"></span></p>
+                        <h3>TOTAL PAGADO: <span id="rec-total"></span></h3>
+                    </div>
+                </div>
+                <div class="receipt-footer">
+                    <p>Este documento es un comprobante de pago oficial emitido por la institución escolar.</p>
+                </div>
+            </div>
+
+            <!-- BOTONES DEL MODAL -->
+            <div class="modal-actions">
+                <button id="cancel-preview-btn" class="btn-danger" type="button">Cancelar</button>
+                <button id="print-only-btn" class="btn-info hidden" type="button">Imprimir Comprobante</button>
+                <button id="confirm-print-btn" class="btn-success" type="button">Guardar e Imprimir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vinculación del archivo lógico de programación -->
+    <script src="script.js"></script>
+</body>
+</html>
